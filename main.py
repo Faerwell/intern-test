@@ -1,10 +1,13 @@
 from data_cleanup import transaction_processing, customer_processing, data_merging
-from data_analysis import top5, avg_trans_by_city, highest_revenue
+from data_analysis import top5, avg_trans_by_city, highest_revenue, percen_trans_payment, revenue_last_month
 
 
 def run():
+
+    # Подготовка и очистка данных
     transactions = transaction_processing()
     clients = customer_processing()
+    # Объединение данных
     merged_data = data_merging(transactions, clients)
 
     # Топ-5 популярных услуг
@@ -16,6 +19,11 @@ def run():
     # Услуга с наибольшей выручкой
     highest_revenue(merged_data)
 
+    # Процент транзакций по способам оплаты
+    percen_trans_payment(merged_data)
+
+    # Выручка за последний месяц
+    revenue_last_month(merged_data)
 
 
 
