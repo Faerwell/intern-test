@@ -1,5 +1,6 @@
 from data_cleanup import transaction_processing, customer_processing, data_merging
-from data_analysis import top5, avg_trans_by_city, highest_revenue, percen_trans_payment, revenue_last_month
+from data_analysis import (top5, avg_trans_by_city, highest_revenue, percen_trans_payment, revenue_last_month,
+                           revenue_customer_category)
 
 
 def run():
@@ -25,7 +26,8 @@ def run():
     # Выручка за последний месяц
     revenue_last_month(merged_data)
 
-
+    # Задание 3: Выручка по категориям клиентов
+    revenue_customer_category(merged_data)
 
 
 

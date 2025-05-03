@@ -26,3 +26,30 @@ def revenue_last_month(merged_data):
     last_month = merged_data["transaction_date"].max() - pd.DateOffset(months=1)
     last_month_revenue = merged_data[merged_data["transaction_date"] >= last_month]["amount"].sum()
     print(f"Выручка за последний месяц: {last_month_revenue:.2f}")
+
+
+'''
+Объединение данных и анализ по уровням активов
+Объединение данных. Объединить транзакции с клиентскими данными (по id). 
+Создать новую колонку с уровнями активов. Провести анализ по уровням активов и определить, какие категории клиентов 
+    приносят наибольшую выручку. Категории клиентов по уровню активов: 
+        a. Низкий капитал (<100 000)
+        b. Средний капитал (100 000 - 1 000 000)
+        c. Высокий капитал (>1 000 000)
+'''
+
+# Создание колонки с уровнями активов
+def creating_col_asset_levels(merged_data):
+    bins = [-float("inf"), 100_000, 1_000_000, float("inf")]
+    labels = ["Низкий капитал", "Средний капитал", "Высокий капитал"]
+    merged_data["asset_level"] = pd.cut(merged_data["net_worth"], bins=bins, labels=labels)
+    return merged_data
+
+# Выручка по категориям клиентов
+def revenue_customer_category(merged_data):
+    new_data = creating_col_asset_levels(merged_data)
+    revenue_by_asset = new_data.groupby("asset_level", observed=False)["amount"].sum()
+    # Перед выводом результатов
+    pd.options.display.float_format = "{:,.2f}".format
+
+    print("Выручка по уровням активов:\n", revenue_by_asset)
