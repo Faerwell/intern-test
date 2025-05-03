@@ -25,7 +25,7 @@ def percen_trans_payment(merged_data):
 def revenue_last_month(merged_data):
     last_month = merged_data["transaction_date"].max() - pd.DateOffset(months=1)
     last_month_revenue = merged_data[merged_data["transaction_date"] >= last_month]["amount"].sum()
-    print(f"Выручка за последний месяц: {last_month_revenue:.2f}")
+    print(f"Выручка за последний месяц: {last_month_revenue:,.2f}")
 
 
 '''
